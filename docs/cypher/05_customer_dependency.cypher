@@ -1,0 +1,1 @@
+MATCH (b:ProductionBatch {id:$batch})-[:INCLUDED_IN_SHIPMENT]->(s:Shipment)-[:FULFILLS]->(o:CustomerOrder)-[:ORDERED_BY]->(c:Customer) RETURN s.id,s.status,o.id,c.name

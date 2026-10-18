@@ -1,0 +1,1 @@
+MATCH (l:IngredientLot {id:$lot})<-[c:CONSUMED_LOT]-(b:ProductionBatch) RETURN b.id,c.certainty,c.source

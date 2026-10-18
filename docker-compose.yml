@@ -1,0 +1,49 @@
+name: speccascade
+services:
+  falkordb:
+    image: falkordb/falkordb:latest
+    ports: ["127.0.0.1:6379:6379", "127.0.0.1:3000:3000"]
+    environment:
+      REDIS_ARGS: --appendonly yes --appendfsync everysec
+      FALKORDB_ARGS: THREAD_COUNT 2
+    volumes: ["graph_data:/data"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+  api:
+    build: ./backend
+    ports: ["127.0.0.1:8000:8000"]
+    environment:
+      FALKORDB_HOST: falkordb
+      FALKORDB_PORT: 6379
+      ERP_PATH: /state/erp.sqlite
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      AI_PROVIDER: ${AI_PROVIDER:-auto}
+    volumes: ["erp_data:/state"]
+    depends_on:
+      falkordb: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+  frontend:
+    build: ./frontend
+    ports: ["127.0.0.1:5173:80"]
+    depends_on:
+      api: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+volumes:
+  graph_data:
+  erp_data:

@@ -1,0 +1,1 @@
+MATCH (m:MemoryEpisode) WHERE m.verified=true AND m.outdated=false AND m.cause='undeclared_allergen' AND m.supplier=$supplier AND m.allergen=$allergen RETURN properties(m)

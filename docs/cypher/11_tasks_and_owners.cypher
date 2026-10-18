@@ -1,0 +1,1 @@
+MATCH (t:AgentTask)-[:ASSIGNED_TO]->(e:Employee) WHERE t.investigation=$inv AND t.status='open' RETURN t.id,t.name,t.batch,e.name

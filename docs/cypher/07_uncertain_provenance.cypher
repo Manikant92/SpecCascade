@@ -1,0 +1,1 @@
+MATCH (n:ChangeNotice {id:$notice})-[a:APPLIES_TO_LOT]->(l)<-[c:CONSUMED_LOT]-(b) WHERE a.certainty='unresolved' OR c.certainty='unresolved' RETURN b.id,l.id,a.certainty,c.certainty

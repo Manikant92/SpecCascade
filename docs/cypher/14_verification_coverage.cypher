@@ -1,0 +1,1 @@
+MATCH (i:Investigation {id:$inv})-[:VERIFIED_BY]->(v:Verification) RETURN v.passed,v.payload,v.at

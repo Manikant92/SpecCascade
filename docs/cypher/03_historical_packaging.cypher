@@ -1,0 +1,1 @@
+MATCH (b:ProductionBatch {id:$batch})-[:PACKAGED_WITH]->(p:PackagingVersion)-[:HAS_DECLARATION]->(d:AllergenDeclaration) RETURN p.id,d.id,d.allergens

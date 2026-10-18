@@ -1,0 +1,1 @@
+MATCH (a:ProposedAction {id:$action})-[:AFFECTS]->(b) OPTIONAL MATCH (b)-[:INCLUDED_IN_SHIPMENT]->(s)-[:FULFILLS]->(o) RETURN a.id,b.id,s.id,o.id

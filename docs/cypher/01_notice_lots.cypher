@@ -1,0 +1,1 @@
+MATCH (n:ChangeNotice {id:$notice})-[a:APPLIES_TO_LOT]->(l:IngredientLot) RETURN l.id,a.certainty,a.valid_from,a.valid_to

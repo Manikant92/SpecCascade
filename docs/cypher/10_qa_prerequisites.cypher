@@ -1,0 +1,1 @@
+MATCH (a:ProposedAction {id:$action})-[:REQUIRES_APPROVAL]->(p:Policy) OPTIONAL MATCH (a)-[:SUPPORTED_BY]->(e:EvidenceDocument) RETURN p.release_prerequisites,e.prerequisite,e.authority

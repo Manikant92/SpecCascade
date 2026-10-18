@@ -1,0 +1,1 @@
+MATCH (i:Investigation {id:$inv})-[:HAS_FINDING]->(f)-[:AFFECTS]->(b:ProductionBatch {id:$batch}) MATCH (f)-[:SUPPORTED_BY]->(p:Policy) RETURN f.rationale,f.payload,p.rule

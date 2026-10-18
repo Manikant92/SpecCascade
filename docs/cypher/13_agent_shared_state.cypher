@@ -1,0 +1,1 @@
+MATCH (i:Investigation {id:$inv})-[:HAS_FINDING]->(f) OPTIONAL MATCH (i)-[:HAS_EVENT]->(e:AgentEvent) WHERE e.status=$status RETURN DISTINCT f.batch,f.classification,e.agent,e.tool LIMIT 200

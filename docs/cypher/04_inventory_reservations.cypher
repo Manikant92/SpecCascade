@@ -1,0 +1,1 @@
+MATCH (b:ProductionBatch {id:$batch})-[:STORED_AT]->(w:Warehouse) OPTIONAL MATCH (b)-[:ALLOCATED_TO]->(r:InventoryReservation) RETURN w.id,r.id,r.units
